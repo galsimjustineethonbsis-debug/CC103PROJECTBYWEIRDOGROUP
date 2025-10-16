@@ -2,6 +2,11 @@
 import java.util.*;
 
 public class Main {
+    static String vehicleType,plateNum;
+    static int carCount=0,motorCount=0,TruckCount=0;
+    static String timeIn, timeOut;
+    static int timeInHr,timeInMin,timeOutHr,timeOutMin;
+    
 
     public static void main(String[] args) {
             //initialize the variables and scanner
@@ -77,7 +82,9 @@ public class Main {
 
     } //main function
 
-    
+    static 
+
+
 
 
 
