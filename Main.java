@@ -3,18 +3,18 @@ import java.util.*;
 
 public class Main {
     static String vehicleType,plateNum;
-    static int carCount=0,motorCount=0,TruckCount=0;
-    static String timeIn, timeOut;
+    static int carCount=0,motorCount=0,truckCount=0;
+    static int timeIn, timeOut;
     static int timeInHr,timeInMin,timeOutHr,timeOutMin;
-    
 
+    static String border = "----------------------------------------";
+    
     public static void main(String[] args) {
             //initialize the variables and scanner
         Scanner input = new Scanner(System.in);
 
         String username = "user", newUsername, loginUsername;
         String password = "1234", oldPassword, newPassword, loginPassword;
-        String border = "----------------------------------------";
 
         int menuChoice;
 
@@ -58,7 +58,7 @@ public class Main {
 
             switch(menuChoice){
                 case 1:
-                    //function1
+                    InputVehicleInfo();
                     break;
                 case 2:
                     //function2
@@ -79,8 +79,51 @@ public class Main {
 
         } //main menu loops
 
-
+        System.out.println(border +"\nExiting Program.. Thank you for using the BULSU CICT Parking fee System!\n"+ border);
     } //main function
+
+    static void InputVehicleInfo(){
+        Scanner inputVehicle = new Scanner(System.in);
+        boolean status = true;
+
+        do{
+
+        System.out.println(border + "\nADD VEHICLE RECORD\n" + border);
+
+        do{
+
+        System.out.print("\nEnter vehicle type(Car, Motorcycle,Truck): ");
+        vehicleType = inputVehicle.next();
+        
+        if(vehicleType.equalsIgnoreCase("car"))
+        carCount++;
+        else if(vehicleType.equalsIgnoreCase("motor"))
+        motorCount++;
+        else if(vehicleType.equalsIgnoreCase("truck"))
+        truckCount++;
+        else{
+            System.out.print(border +"\nINVALID INPUT! ONLY (Car, Motorcycle,Truck) IS ACCEPTED\n"+ border);
+        }
+
+        }while(!(vehicleType.equalsIgnoreCase("car")) ||(vehicleType.equalsIgnoreCase("motorcycle")) || (vehicleType.equalsIgnoreCase("truck")));
+
+        System.out.print("Enter vehicle Plate Number: ");
+        vehicleType = inputVehicle.next();
+
+        System.out.print("Enter vehicle time IN (0000-2359 with NO colons \":\"): ");
+        timeIn = inputVehicle.nextInt();
+
+        System.out.print("Enter vehicle time OUT (0000(12:00am)-2359(11:59pm) with NO colons \":\"): ");
+        timeOut = inputVehicle.nextInt();
+
+        
+
+
+
+
+        }while(status = true);
+
+    }//inputs vehicle info
 
     
 
