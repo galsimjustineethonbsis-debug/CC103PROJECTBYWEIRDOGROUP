@@ -85,45 +85,77 @@ public class Main {
     static void InputVehicleInfo(){
         Scanner inputVehicle = new Scanner(System.in);
         boolean status = true;
+        String confirm;
 
         do{
 
-        System.out.println(border + "\nADD VEHICLE RECORD\n" + border);
+            System.out.println(border + "\nADD VEHICLE RECORD\n" + border);
 
-        do{
+            do{
 
-        System.out.print("\nEnter vehicle type(Car, Motorcycle,Truck): ");
-        vehicleType = inputVehicle.next();
-        
-        if(vehicleType.equalsIgnoreCase("car"))
-        carCount++;
-        else if(vehicleType.equalsIgnoreCase("motor"))
-        motorCount++;
-        else if(vehicleType.equalsIgnoreCase("truck"))
-        truckCount++;
-        else{
-            System.out.print(border +"\nINVALID INPUT! ONLY (Car, Motorcycle,Truck) IS ACCEPTED\n"+ border);
-        }
+                System.out.print("\nEnter vehicle type(Car, Motorcycle,Truck): ");
+                vehicleType = inputVehicle.next();
+                
+                
+                if(vehicleType.equalsIgnoreCase("car"))
+                carCount++;
+                else if(vehicleType.equalsIgnoreCase("motorcycle"))
+                motorCount++;
+                else if(vehicleType.equalsIgnoreCase("truck"))
+                truckCount++;
+                else{
+                    System.out.print(border +"\nINVALID INPUT! ONLY (Car, Motorcycle,Truck) IS ACCEPTED\n"+ border);
+                }
 
-        }while(!(vehicleType.equalsIgnoreCase("car")) ||(vehicleType.equalsIgnoreCase("motorcycle")) || (vehicleType.equalsIgnoreCase("truck")));
+            }while(!((vehicleType.equalsIgnoreCase("car")) ||(vehicleType.equalsIgnoreCase("motorcycle")) || (vehicleType.equalsIgnoreCase("truck"))));
 
-        System.out.print("Enter vehicle Plate Number: ");
-        vehicleType = inputVehicle.next();
+            System.out.print("\nEnter vehicle Plate Number(xxx-xxxx): ");
+            vehicleType = inputVehicle.next();
 
-        System.out.print("Enter vehicle time IN (0000-2359 with NO colons \":\"): ");
-        timeIn = inputVehicle.nextInt();
+      
+            
 
-        System.out.print("Enter vehicle time OUT (0000(12:00am)-2359(11:59pm) with NO colons \":\"): ");
-        timeOut = inputVehicle.nextInt();
+            
+    
+            do{
+                
+                System.out.print("\nEnter vehicle time IN  (0000(12:00am)-2359(11:59pm) with NO colons \":\"): ");
+                timeIn = inputVehicle.nextInt();
 
-        
+                if(timeIn<0 || timeIn>2359){
+                    System.out.println("\nInvalid input! time IN must be 0000-2359 ONLY");
+                }
 
+            }while(timeIn<0 || timeIn>2359);
+            System.out.println(border);
+            do{
 
+                    System.out.print( "Enter vehicle time OUT (0000(12:00am)-2359(11:59pm) with NO colons \":\"): ");
+                    timeOut = inputVehicle.nextInt(); 
 
+            
+            }while(timeOut<timeIn || timeIn < 2359);      
+            
+            do{
+            System.out.print("\ntry again? (Y/N): ");
+            confirm = inputVehicle.next();
+            if(confirm.equalsIgnoreCase("n"))
+                status = false;
+            
+            else if(confirm.equalsIgnoreCase("y"))
+                status = true;
+            else{
+                System.out.println("Invalid input please try again.\n");
+            }
+        }while(!(confirm.equalsIgnoreCase("y")|| confirm.equalsIgnoreCase("n")));
+            
+            
 
         }while(status = true);
 
     }//inputs vehicle info
+
+
 
     
 
