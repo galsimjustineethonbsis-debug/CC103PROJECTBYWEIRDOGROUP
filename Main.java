@@ -115,26 +115,29 @@ public class Main {
       
             
 
-            
+
     
-            do{
+                do{
+                    
+                    System.out.print("\nEnter vehicle time IN  (0000(12:00am)-2359(11:59pm) with NO colons \":\"): ");
+                    timeIn = inputVehicle.nextInt();
+
+                    if((timeIn<0 || timeIn>2400) || (timeIn/100>=24 || timeIn%100>=60)){
+                        System.out.println("\nInvalid input! time IN must be 0000-2359 ONLY");
+                    }
+
+                }while((timeIn<0 || timeIn>2400) ||(timeIn/100>=24 || timeIn%100>=60));
+                System.out.println(border);
+                do{
+
+                        System.out.print( "Enter vehicle time OUT (0000(12:00am)-2359(11:59pm) with NO colons \":\"): ");
+                        timeOut = inputVehicle.nextInt(); 
+
                 
-                System.out.print("\nEnter vehicle time IN  (0000(12:00am)-2359(11:59pm) with NO colons \":\"): ");
-                timeIn = inputVehicle.nextInt();
+                }while(timeOut<timeIn || timeIn>2359 || (timeOut/100>=24 || timeOut%100>=60 ));
 
-                if(timeIn<0 || timeIn>2359){
-                    System.out.println("\nInvalid input! time IN must be 0000-2359 ONLY");
-                }
 
-            }while(timeIn<0 || timeIn>2359);
-            System.out.println(border);
-            do{
 
-                    System.out.print( "Enter vehicle time OUT (0000(12:00am)-2359(11:59pm) with NO colons \":\"): ");
-                    timeOut = inputVehicle.nextInt(); 
-
-            
-            }while(timeOut<timeIn || timeIn < 2359);      
             
             do{
             System.out.print("\ntry again? (Y/N): ");
