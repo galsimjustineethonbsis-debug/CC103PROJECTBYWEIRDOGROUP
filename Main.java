@@ -19,7 +19,8 @@ public class Main {
 
         int menuChoice;
 
-        boolean isLogin = false;
+        String confirm;
+        boolean isLogin = false, status;
         int errCtr = 3;
 
         System.out.println("\nWelcome to the BULSU CICT Parking fee System!\nPlease log in.");
@@ -59,7 +60,22 @@ public class Main {
 
             switch(menuChoice){
                 case 1:
-                    InputVehicleInfo();
+                    do{
+
+                        InputVehicleInfo();
+                        
+                        System.out.print("\ntry again? (Y/N): ");
+                        confirm = input.next();
+
+                        if(confirm.equalsIgnoreCase("n"))
+                            status = false;                    
+                        
+                        else if(confirm.equalsIgnoreCase("y"))
+                            status = true;
+                        else{
+                            System.out.println("Invalid input please try again.\n");
+                    }
+                    }while(!(confirm.equalsIgnoreCase("y")|| confirm.equalsIgnoreCase("n")));
                     break;
                 case 2:
                     //function2
@@ -83,12 +99,12 @@ public class Main {
         System.out.println(border +"\nExiting Program.. Thank you for using the BULSU CICT Parking fee System!\n"+ border);
     } //main function
 
-    static void InputVehicleInfo(){
+    static void InputVehicleInfo(){ 
         Scanner inputVehicle = new Scanner(System.in);
         boolean status = true;
         String confirm;
 
-        do{
+        
 
             System.out.println(border + "\nADD VEHICLE RECORD\n" + border);
 
@@ -99,11 +115,11 @@ public class Main {
                 
                 
                 if(vehicleType.equalsIgnoreCase("car"))
-                carCount++;
+                    carCount++;
                 else if(vehicleType.equalsIgnoreCase("motorcycle"))
-                motorCount++;
+                    motorCount++;
                 else if(vehicleType.equalsIgnoreCase("truck")|| vehicleType.equalsIgnoreCase("suv"))
-                truckCount++;                
+                    truckCount++;                
                 else{
                     System.out.print(border +"\nINVALID INPUT! ONLY (Car, Motorcycle,Truck, SUV) IS ACCEPTED\n"+ border);
                 }
@@ -137,35 +153,23 @@ public class Main {
                 
             }while(timeOut<timeIn || timeOut>2359 || (timeOut/100>=24 || timeOut%100>=60 ));
 
-
             
-            do{
-                System.out.print("\ntry again? (Y/N): ");
-                confirm = inputVehicle.next();
-                if(confirm.equalsIgnoreCase("n"))
-                    status = false;                    
-                
-                else if(confirm.equalsIgnoreCase("y"))
-                    status = true;
-                else{
-                    System.out.println("Invalid input please try again.\n");
-                }
-            }while(!(confirm.equalsIgnoreCase("y")|| confirm.equalsIgnoreCase("n")));
-            
-            timeInHr = timeIn / 100;
-            timeInMin = timeIn % 100;
-            timeOutHr = timeOut / 100;
-            timeOutMin = timeOut % 100;
 
-            System.out.println(timeInHr + ":" + timeInMin);
-            
-            System.out.println(ComputeParkngFee());
 
-        }while(status == true);
+          
+            
+
+
+
 
     }//inputs vehicle info
 
     static double ComputeParkngFee(){
+        timeInHr = timeIn / 100;
+        timeInMin = timeIn % 100;
+        timeOutHr = timeOut / 100;
+        timeOutMin = timeOut % 100;
+
         int totalMinutesIN = (timeInHr*60) + timeInMin, totalMinutesOUT = (timeOutHr*60) + timeOutMin, timeDiff = (totalMinutesOUT - totalMinutesIN);
         int rate=0;
         double fee=0;
@@ -196,7 +200,9 @@ public class Main {
 
     }//computes parking fee
 
-    
+    static void DisplayReceipt(){
+
+    }
 
 
 
