@@ -64,6 +64,7 @@ public class Main {
                     do{
 
                         InputVehicleInfo();
+                        DisplayReceipt();
                         
                         System.out.print("\ntry again? (Y/N): ");
                         confirm = input.next();
@@ -222,11 +223,40 @@ public class Main {
     }//computes parking fee
 
     static void DisplayReceipt(){
+        timeInHr = timeIn / 100;
+        timeInMin = timeIn % 100;
+        timeOutHr = timeOut / 100;
+        timeOutMin = timeOut % 100;
         
-        int totalDuration = (((timeInHr*60)+timeInMin)-((timeOutHr*60)-timeOutMin)/60);
+        int totalDuration = (((((timeOutHr*60)-timeOutMin))-(timeInHr*60)+timeInMin)/60);
         if(((timeInHr*60)+timeInMin)-((timeOutHr*60)-timeOutMin)%60!=0){
             totalDuration++;
         }
+        System.out.println(border + "\nSUMMARY RECEIPT\n" + border);
+        System.out.println("Vehicle: " + vehicleType);
+        System.out.println("Plate Number: " + plateNum);
+        if (timeInMin < 10 && timeInHr < 10){
+            System.out.println("Time In: " + "0" + timeInHr + ":" + "0" + timeInMin);
+        } else if (timeInMin < 10 && timeInHr > 10){
+            System.out.println("Time In: " + timeInHr + ":" + "0" + timeInMin);
+        } else if (timeInMin > 10 && timeInHr < 10){
+            System.out.println("Time In: " + "0" + timeInHr + ":" + timeInMin);
+        }  else {
+            System.out.println("Time In: " + timeInHr + ":" + timeInMin);
+        }
+       
+        if (timeOutMin < 10 && timeOutHr < 10){
+            System.out.println("Time Out: " + "0" + timeOutHr + ":" + "0" + timeOutMin);
+        } else if (timeOutMin < 10 && timeInHr > 10){
+            System.out.println("Time Out: " + timeOutHr + ":" + "0" + timeOutMin);
+        } else if (timeOutMin > 10 && timeInHr < 10){
+            System.out.println("Time Out: " + "0" + timeOutHr + ":" + timeOutMin);
+        }  else {
+            System.out.println("Time Out: " + timeOutHr + ":" + timeOutMin);
+        }
+        System.out.println("Total Duration: " + totalDuration );
+        System.out.println("fee: " + ComputeParkngFee());
+
 
     }
 
