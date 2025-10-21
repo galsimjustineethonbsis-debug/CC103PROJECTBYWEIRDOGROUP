@@ -7,6 +7,7 @@ public class Main {
     static int timeIn, timeOut;
     static int timeInHr, timeInMin, timeOutHr, timeOutMin;
     static double total;
+    static boolean isPWDorSS;
 
     static String border = "----------------------------------------";
     
@@ -84,7 +85,7 @@ public class Main {
                     //function3
                     break;
                 case 4:
-                    //outputs blablabla basta nasa rubrics
+                    //outputs blablabla basta nasa rubrics member info 
                     break;
                 case 5:
                     isLogin = false;
@@ -96,7 +97,7 @@ public class Main {
 
         } //main menu loops
 
-        System.out.println(border +"\nExiting Program.. Thank you for using the BULSU CICT Parking fee System!\n"+ border);
+        System.out.println(border +"\nExiting Program... Thank you for using the BULSU CICT Parking fee System!\n"+ border);
     } //main function
 
     static void InputVehicleInfo(){ 
@@ -125,9 +126,32 @@ public class Main {
                 }
 
             }while(!((vehicleType.equalsIgnoreCase("car")) ||(vehicleType.equalsIgnoreCase("motorcycle")) || (vehicleType.equalsIgnoreCase("truck") || (vehicleType.equalsIgnoreCase("suv")))));
-            //line 110 validates input
+            // validates input
             System.out.print("\nEnter vehicle Plate Number with NO SPACES(eg. abc-1234): ");
             plateNum  = inputVehicle.next();
+
+            do{
+                System.out.println("\nLost ticket (Y/N): ");
+                confirm = inputVehicle.next();
+                
+                if(!(confirm.equalsIgnoreCase("y")|| confirm.equalsIgnoreCase("n"))){
+                    System.out.print("Invalid input (Y/N) ONLY");
+                }   
+            }while(!(confirm.equalsIgnoreCase("y")|| confirm.equalsIgnoreCase("n")));
+            confirm = "";
+            do{
+                System.out.println("\nPWD or Senior Citizen (Y/N): ");
+                confirm = inputVehicle.next();
+                
+                if(!(confirm.equalsIgnoreCase("y")|| confirm.equalsIgnoreCase("n"))){
+                    System.out.print("Invalid input (Y/N) ONLY");
+                }
+                else{
+                    isPWDorSS = true;
+                }
+            }while(!(confirm.equalsIgnoreCase("y")|| confirm.equalsIgnoreCase("n")));            
+
+            
 
             System.out.println("\nTIME IN");
             do{
@@ -153,14 +177,6 @@ public class Main {
                 
             }while(timeOut<timeIn || timeOut>2359 || (timeOut/100>=24 || timeOut%100>=60 ));
 
-            
-
-
-          
-            
-
-
-
 
     }//inputs vehicle info
 
@@ -171,7 +187,7 @@ public class Main {
         timeOutMin = timeOut % 100;
 
         int totalMinutesIN = (timeInHr*60) + timeInMin, totalMinutesOUT = (timeOutHr*60) + timeOutMin, timeDiff = (totalMinutesOUT - totalMinutesIN);
-        int rate=0;
+         int rate=0;
         double fee=0;
 
         
@@ -195,12 +211,22 @@ public class Main {
             fee = firstHour + (((timeDiff/60)- 1 )* rate);
         }
 
+        if(isPWDorSS == true){
+            fee-=(fee*0.2);
+        }
+
+
         total+=fee;
         return fee;        
 
     }//computes parking fee
 
     static void DisplayReceipt(){
+        
+        int totalDuration = (((timeInHr*60)+timeInMin)-((timeOutHr*60)-timeOutMin)/60);
+        if(((timeInHr*60)+timeInMin)-((timeOutHr*60)-timeOutMin)%60!=0){
+            totalDuration++;
+        }
 
     }
 
