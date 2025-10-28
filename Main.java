@@ -23,7 +23,7 @@ public class Main {
         String confirm;
         boolean isLogin = false, status;
         int errCtr = 3;
-
+        
         System.out.println("\nWelcome to the BULSU CICT Parking fee System!\nPlease log in.");
         do {
             //login 
@@ -80,13 +80,41 @@ public class Main {
                     }while(!(confirm.equalsIgnoreCase("y")|| confirm.equalsIgnoreCase("n")));
                     break;
                 case 2:
-                    //function2
+                    GenerateSummary();
                     break;               
                 case 3:
                     //function3
                     break;
                 case 4:
-                    //outputs blablabla basta nasa rubrics member info 
+                    do {
+                    System.out.println(border);
+                    System.out.println("Group 2 CC 103 Final Project");
+                    System.out.println("Parking Fee System!");
+                    
+                    System.out.println("Presented By: ");
+                    System.out.println("Leader & Lead Developer: Jared Con Medina");
+                    System.out.println("Project Manager & Assistant Developer: Thristan Sillano");
+                    System.out.println("Developer: Justine Ethon Galsim");
+                    System.out.println("Tester & Documentation & Production & Program Concept Desiger: ");
+                    System.out.println("Isabella Quiñon, Abiael Capongga");
+                    System.out.println(border);
+
+                    System.out.println("Presented to: ");
+                    System.out.println("Engr. Evelyn C. Samson");
+
+                    System.out.println("Do you want to try again?");
+                    System.out.print("\ntry again? (Y/N): ");
+                        confirm = input.next();
+
+                        if(confirm.equalsIgnoreCase("n"))
+                            status = false;                    
+                        
+                        else if(confirm.equalsIgnoreCase("y"))
+                            status = true;
+                        else{
+                            System.out.println("Invalid input please try again.\n");
+                    }
+                    }while(!(confirm.equalsIgnoreCase("y")|| confirm.equalsIgnoreCase("n")));
                     break;
                 case 5:
                     isLogin = false;
@@ -256,11 +284,13 @@ public class Main {
         }
         System.out.println("Total Duration: " + totalDuration );
         System.out.println("fee: " + ComputeParkngFee());
-
-
     }
-
-
+    static void GenerateSummary(){
+        System.out.println(border);
+        System.out.println("Total Vehicle Parked Today: ");
+        System.out.println("Total Fees Collected: " +  total);
+        System.out.println("Average Time Parked: ");
+    }
 
 
 
