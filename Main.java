@@ -10,6 +10,10 @@ public class Main {
     static int timeInHr, timeInMin, timeOutHr, timeOutMin; //splits the time into hours and minutes
     static double totalFees; //total collected fees
     static boolean isDiscounted; //true if PWD or senior citizen
+    static int totalVehicles = 0;
+    static int totalParkingMinutes = 0;
+    static String username = "user";
+    static String password = "1234";
 
     static String border = "----------------------------------------"; // line divider for display
 
@@ -17,8 +21,8 @@ public class Main {
         //initialize the variables and scanner
         Scanner input = new Scanner(System.in);
 
-        String username = "user", newUsername, loginUsername;
-        String password = "1234", oldPassword, newPassword, loginPassword;
+        String newUsername, loginUsername;
+        String newPassword, loginPassword;
 
         int menuChoice;
 
@@ -49,7 +53,14 @@ public class Main {
         } while (!isLogin);
 
         while (isLogin) {
-            System.out.println("\nWelcome to the BULSU CICT Parking fee System, " + username + "!");
+            System.out.println(" _    _      _                          _ \n"
+                    + "| |  | |    | |                        | |\n"
+                    + "| |  | | ___| | ___ ___  _ __ ___   ___| |\n"
+                    + "| |/\\| |/ _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\ |\n"
+                    + "\\  /\\  /  __/ | (_| (_) | | | | | |  __/_|\n"
+                    + " \\/  \\/ \\___|_|\\___\\___/|_| |_| |_|\\___(_)\n"
+                    + "                                          \n"
+                    + "to the BULSU CICT Parking fee System, " + username + "!");
             System.out.println(border + "\nMAIN MENU\n" + border);
 
             System.out.println("[1] Add vehicle record");
@@ -84,7 +95,7 @@ public class Main {
                     GenerateSummary();
                     break;
                 case 3:
-                    //function3
+                    ChangeLoginInfo();
                     break;
                 case 4:
                     do {
@@ -200,6 +211,12 @@ public class Main {
 
         } while (timeOut < timeIn || timeOut > 2359 || (timeOut / 100 >= 24 || timeOut % 100 >= 60));
 
+        totalVehicles++;
+
+        int inMinutes = (timeIn / 100) * 60 + (timeIn % 100);
+        int outMinutes = (timeOut / 100) * 60 + (timeOut % 100);
+        totalParkingMinutes += (outMinutes - inMinutes);
+
     }//inputs vehicle info
 
     public static double ComputeParkingFee() {
@@ -278,9 +295,81 @@ public class Main {
 
     public static void GenerateSummary() {
         System.out.println(border);
-        System.out.println("Total Vehicle Parked Today: ");
-        System.out.println("Total Fees Collected: " + totalFees);
-        System.out.println("Average Time Parked: ");
+        System.out.println("DAILY SUMMARY REPORT");
+        System.out.println(border);
+
+        System.out.println("Total Vehicles Served: " + totalVehicles);
+        System.out.println("   Cars: " + carCount);
+        System.out.println("   Motorcycles: " + motorCount);
+        System.out.println("   Trucks: " + truckCount);
+
+        System.out.println("\nTotal Fees Collected: P" + totalFees);
+
+        if (totalVehicles > 0) {
+            int avgMinutes = totalParkingMinutes / totalVehicles;
+            int avgHours = avgMinutes / 60;
+            int avgRemainMins = avgMinutes % 60;
+
+            System.out.println("Average Parking Duration: " + avgHours + " hour(s) and " + avgRemainMins + " minute(s)");
+        } else {
+            System.out.println("No record yet");
+        }
+
+        System.out.println(border);
+
     }
 
+    public static void ChangeLoginInfo() {
+        Scanner input = new Scanner(System.in);
+        String oldPassword, newUsername, newPassword;
+        int choice;
+
+        System.out.println(border + "\nCHANGE LOGIN INFO\n" + border);
+
+        System.out.println("Enter current password to continue: ");
+        oldPassword = input.nextLine();
+
+        if (!oldPassword.equals(password)) {
+            System.out.println("Incorrect Password! Returning to mainmenu...");
+            return;
+        }
+
+        System.out.println("\nOption: ");
+        System.out.println("     [1] Username only");
+        System.out.println("     [2] Password only");
+        System.out.println("     [3] Both Username and Password");
+        System.out.println("Enter Choice: ");
+        choice = input.nextInt();
+        input.nextLine();
+
+        switch (choice) {
+            case 1:
+                System.out.print("Enter new Username: ");
+                newUsername = input.nextLine();
+                username = newUsername;
+                System.out.println("Username successfully changed!");
+                break;
+            case 2:
+                System.out.print("Enter new Password: ");
+                newPassword = input.nextLine();
+                password = newPassword;
+                System.out.println("Password successfully changed!");
+                break;
+            case 3:
+                System.out.print("Enter new Username: ");
+                newUsername = input.nextLine();
+                username = newUsername;
+
+                System.out.print("Enter new Password: ");
+                newPassword = input.nextLine();
+                password = newPassword;
+
+                System.out.println("Username & Password successfully changed!");
+                break;
+            default:
+                System.out.println("Invalid choice! Returning to menu...");
+                break;
+        }
+        System.out.println(border);
+    }
 }//class
