@@ -98,24 +98,24 @@ public class Main {
                     ChangeLoginInfo();
                     break;
                 case 4:
-                    
-                        System.out.println(border);
-                        System.out.println("Group 2 CC 103 Final Project"  );
-                        System.out.println("Parking Fee System\n");
 
-                        System.out.println("Presented By: \n");
-                        System.out.println("Leader & Lead Developer: Jared Con Medina\n");
-                        System.out.println("Project Manager & Assistant Developer: Thristan Sillano\n");
-                        System.out.println("Developer: Justine Ethon Galsim\n");
-                        System.out.println("Tester & Documentation & Production & Program Concept Desiger: ");
-                        System.out.println("Isabella Quiñon, Abiael Capongga");
-                        System.out.println(border);
+                    System.out.println(border);
+                    System.out.println("Group 2 CC 103 Final Project");
+                    System.out.println("Parking Fee System\n");
 
-                        System.out.println("Presented to: ");
-                        System.out.println("Engr. Evelyn C. Samson\n" + border);
-                        input.nextLine();
-                        System.out.print("Press enter to continue...");
-                        input.nextLine(); 
+                    System.out.println("Presented By: \n");
+                    System.out.println("Leader & Lead Developer: Jared Con Medina\n");
+                    System.out.println("Project Manager & Assistant Developer: Thristan Sillano\n");
+                    System.out.println("Developer: Justine Ethon Galsim\n");
+                    System.out.println("Tester & Documentation & Production & Program Concept Desiger: ");
+                    System.out.println("Isabella Quiñon, Abiael Capongga");
+                    System.out.println(border);
+
+                    System.out.println("Presented to: ");
+                    System.out.println("Engr. Evelyn C. Samson\n" + border);
+                    input.nextLine();
+                    System.out.print("Press enter to continue...");
+                    input.nextLine();
                     break;
                 case 5:
                     isLogin = false;
@@ -149,7 +149,7 @@ public class Main {
             } else if (vehicleType.equalsIgnoreCase("truck") || vehicleType.equalsIgnoreCase("suv")) {
                 truckCount++;
             } else {
-                System.out.print(border + "\nINVALID INPUT! ONLY (Car, Motorcycle,Truck, SUV) IS ACCEPTED\n" + border);
+                System.out.print(border + "\nINVALID INPUT! ONLY (Car, Motorcycle, Truck, SUV) IS ACCEPTED\n" + border);
             }
 
         } while (!((vehicleType.equalsIgnoreCase("car")) || (vehicleType.equalsIgnoreCase("motorcycle")) || (vehicleType.equalsIgnoreCase("truck") || (vehicleType.equalsIgnoreCase("suv")))));
@@ -160,27 +160,33 @@ public class Main {
         do {
             System.out.print("\nLost ticket (Y/N): ");
             confirm = inputVehicle.next();
-            
 
             if (!(confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("n"))) {
-                System.out.print("Invalid input (Y/N) ONLY");
-            }if(confirm.equalsIgnoreCase("y")){
-
+                isLostticket = true;
+            } else if (confirm.equalsIgnoreCase("y")) {
+                isLostticket = false;
+            } else {
+                System.out.println("Invalid input (Y/N) ONLY");
             }
+
         } while (!(confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("n")));
         confirm = "";
+
         do {
             System.out.print("\nPWD or Senior Citizen (Y/N): ");
             confirm = inputVehicle.next();
 
-            if (!(confirm.equalsIgnoreCase("y") && confirm.equalsIgnoreCase("n"))) {
-                System.out.print("Invalid input (Y/N) ONLY");
-            } else if(confirm.equalsIgnoreCase("y")) {
+            if (confirm.equalsIgnoreCase("y")) {
                 isDiscounted = true;
+            } else if (confirm.equalsIgnoreCase("n")) {
+                isDiscounted = false;
+            } else {
+                System.out.println("Invalid input (Y/N) ONLY");
             }
         } while (!(confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("n")));
 
         System.out.println("\nTIME IN");
+
         do {
 
             System.out.print("\nEnter vehicle time IN (0000(12:00am)-2359(11:59pm) with NO colons \":\"): ");
@@ -218,39 +224,72 @@ public class Main {
         timeOutHr = timeOut / 100;
         timeOutMin = timeOut % 100;
 
-        int totalMinutesIN = (timeInHr * 60) + timeInMin, totalMinutesOUT = (timeOutHr * 60) + timeOutMin, timeDiff = (totalMinutesOUT - totalMinutesIN);
         int rate = 0;
         double fee = 0;
 
+        int totalMinutesIN = (timeInHr * 60) + timeInMin;
+        int totalMinutesOUT = (timeOutHr * 60) + timeOutMin;
+        int timeDiff = totalMinutesOUT - totalMinutesIN;
+
+        int totalMinutes = timeDiff;
+        int totalHours = timeDiff / 60;
+        int remainMin = timeDiff % 60;
+
+        if (remainMin > 0) {
+            totalHours++;
+        }
+
+        if (totalMinutes <= 30) {
+            return 0;
+        }
+
+        double totalFee = 0;
+        int firstHourRate = 0;
+        int succeedingRate = 0;
+
         if (vehicleType.equalsIgnoreCase("car")) {
-            rate = 20;
+            firstHourRate = 20;
+            succeedingRate = 10;
         } else if (vehicleType.equalsIgnoreCase("motorcycle")) {
-            rate = 10;
+            firstHourRate = 40;
+            succeedingRate = 20;
         } else if (vehicleType.equalsIgnoreCase("truck") || vehicleType.equalsIgnoreCase("suv")) {
-            rate = 30;
+            firstHourRate = 60;
+            succeedingRate = 30;
+        } else {
+            System.out.println("Invalid vehicle type.");
+            return 0;
+        }
+
+        if (totalHours <= 1) {
+            totalFee = firstHourRate;
+        } else {
+            totalFee = firstHourRate + ((totalHours - 1) * succeedingRate);
+        }
+
+        return totalFee;
+
+        if (isLostticket) {
+            totalFee += 200;
+        }
+
+        if (isDiscounted) {
+            totalFee = totalFee - (totalFee * 0.2);
         }
 
         int firstHour = rate * 2;
 
-        if (totalMinutesIN <= 30) {
+        if (timeDiff <= 30) {
             fee = 0;
         } else {
-            if ((timeDiff / 60) % 60 != 0) {
-                timeDiff += 60;
+
+            //ts rounds it up
+            if (remainMin > 0) {
+                totalHours++;
             }
-            fee = firstHour + (((timeDiff / 60) - 1) * rate);
-        }
+            //1st hour is rate * 2
 
-        if (isDiscounted == true) {
-            fee -= (fee * 0.2);
         }
-
-        if(isLostticket){
-            fee += 200;
-        }
-
-        totalFees += fee;
-        return fee;
 
     }//computes parking fee
 
@@ -351,7 +390,7 @@ public class Main {
                 newPassword = input.nextLine();
                 password = newPassword;
                 System.out.println("Password successfully changed!");
-                
+
                 break;
             case 3:
                 System.out.print("Enter new Username: ");
