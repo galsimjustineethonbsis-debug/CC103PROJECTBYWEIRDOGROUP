@@ -9,7 +9,7 @@ public class Main {
     static int timeIn, timeOut; //stores time in and time out in 24-hour format 
     static int timeInHr, timeInMin, timeOutHr, timeOutMin; //splits the time into hours and minutes
     static double totalFees; //total collected fees
-    static boolean isDiscounted; //true if PWD or senior citizen
+    static boolean isDiscounted, isLostticket; //true if PWD or senior citizen
     static int totalVehicles = 0;
     static int totalParkingMinutes = 0;
     static String username = "user";
@@ -21,8 +21,8 @@ public class Main {
         //initialize the variables and scanner
         Scanner input = new Scanner(System.in);
 
-        String newUsername, loginUsername;
-        String newPassword, loginPassword;
+        String loginUsername;
+        String loginPassword;
 
         int menuChoice;
 
@@ -89,7 +89,7 @@ public class Main {
                         } else {
                             System.out.println("Invalid input please try again.\n");
                         }
-                    } while (!(confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("n")));
+                    } while (status = true);
                     break;
                 case 2:
                     GenerateSummary();
@@ -98,34 +98,24 @@ public class Main {
                     ChangeLoginInfo();
                     break;
                 case 4:
-                    do {
+                    
                         System.out.println(border);
-                        System.out.println("Group 2 CC 103 Final Project");
-                        System.out.println("Parking Fee System!");
+                        System.out.println("Group 2 CC 103 Final Project"  );
+                        System.out.println("Parking Fee System\n");
 
-                        System.out.println("Presented By: ");
-                        System.out.println("Leader & Lead Developer: Jared Con Medina");
-                        System.out.println("Project Manager & Assistant Developer: Thristan Sillano");
-                        System.out.println("Developer: Justine Ethon Galsim");
+                        System.out.println("Presented By: \n");
+                        System.out.println("Leader & Lead Developer: Jared Con Medina\n");
+                        System.out.println("Project Manager & Assistant Developer: Thristan Sillano\n");
+                        System.out.println("Developer: Justine Ethon Galsim\n");
                         System.out.println("Tester & Documentation & Production & Program Concept Desiger: ");
                         System.out.println("Isabella Quiñon, Abiael Capongga");
                         System.out.println(border);
 
                         System.out.println("Presented to: ");
-                        System.out.println("Engr. Evelyn C. Samson");
-
-                        System.out.println("Do you want to try again?");
-                        System.out.print("\ntry again? (Y/N): ");
-                        confirm = input.next();
-
-                        if (confirm.equalsIgnoreCase("n")) {
-                            status = false;
-                        } else if (confirm.equalsIgnoreCase("y")) {
-                            status = true;
-                        } else {
-                            System.out.println("Invalid input please try again.\n");
-                        }
-                    } while (!(confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("n")));
+                        System.out.println("Engr. Evelyn C. Samson\n" + border);
+                        input.nextLine();
+                        System.out.print("Press enter to continue...");
+                        input.nextLine(); 
                     break;
                 case 5:
                     isLogin = false;
@@ -168,21 +158,24 @@ public class Main {
         plateNum = inputVehicle.next();
 
         do {
-            System.out.println("\nLost ticket (Y/N): ");
+            System.out.print("\nLost ticket (Y/N): ");
             confirm = inputVehicle.next();
+            
 
             if (!(confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("n"))) {
                 System.out.print("Invalid input (Y/N) ONLY");
+            }if(confirm.equalsIgnoreCase("y")){
+
             }
         } while (!(confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("n")));
         confirm = "";
         do {
-            System.out.println("\nPWD or Senior Citizen (Y/N): ");
+            System.out.print("\nPWD or Senior Citizen (Y/N): ");
             confirm = inputVehicle.next();
 
-            if (!(confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("n"))) {
+            if (!(confirm.equalsIgnoreCase("y") && confirm.equalsIgnoreCase("n"))) {
                 System.out.print("Invalid input (Y/N) ONLY");
-            } else {
+            } else if(confirm.equalsIgnoreCase("y")) {
                 isDiscounted = true;
             }
         } while (!(confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("n")));
@@ -250,6 +243,10 @@ public class Main {
 
         if (isDiscounted == true) {
             fee -= (fee * 0.2);
+        }
+
+        if(isLostticket){
+            fee += 200;
         }
 
         totalFees += fee;
@@ -354,6 +351,7 @@ public class Main {
                 newPassword = input.nextLine();
                 password = newPassword;
                 System.out.println("Password successfully changed!");
+                
                 break;
             case 3:
                 System.out.print("Enter new Username: ");
