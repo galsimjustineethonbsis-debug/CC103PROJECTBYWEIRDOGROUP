@@ -162,11 +162,11 @@ public class Main {
             confirm = inputVehicle.next();
 
             if (!(confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("n"))) {
-                isLostticket = true;
+                
             } else if (confirm.equalsIgnoreCase("y")) {
-                isLostticket = false;
+                isLostticket = true;
             } else {
-                System.out.println("Invalid input (Y/N) ONLY");
+                isLostticket = false;
             }
 
         } while (!(confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("n")));
@@ -267,9 +267,9 @@ public class Main {
             totalFee = firstHourRate + ((totalHours - 1) * succeedingRate);
         }
 
-        return totalFee;
+        
 
-        if (isLostticket) {
+        if (isLostticket == true) {
             totalFee += 200;
         }
 
@@ -290,6 +290,7 @@ public class Main {
             //1st hour is rate * 2
 
         }
+        return totalFee;
 
     }//computes parking fee
 
@@ -318,9 +319,9 @@ public class Main {
 
         if (timeOutMin < 10 && timeOutHr < 10) {
             System.out.println("Time Out: " + "0" + timeOutHr + ":" + "0" + timeOutMin);
-        } else if (timeOutMin < 10 && timeInHr > 10) {
+        } else if (timeOutMin < 10 && timeOutHr > 10) {
             System.out.println("Time Out: " + timeOutHr + ":" + "0" + timeOutMin);
-        } else if (timeOutMin > 10 && timeInHr < 10) {
+        } else if (timeOutMin > 10 && timeOutHr < 10) {
             System.out.println("Time Out: " + "0" + timeOutHr + ":" + timeOutMin);
         } else {
             System.out.println("Time Out: " + timeOutHr + ":" + timeOutMin);
@@ -362,21 +363,21 @@ public class Main {
 
         System.out.println(border + "\nCHANGE LOGIN INFO\n" + border);
 
-        System.out.println("Enter current password to continue: ");
-        oldPassword = input.nextLine();
+        System.out.print("Enter current password to continue: ");
+        oldPassword = input.next();
 
         if (!oldPassword.equals(password)) {
-            System.out.println("Incorrect Password! Returning to mainmenu...");
+            System.out.print("Incorrect Password! Returning to Main menu...\n");
             return;
         }
 
         System.out.println("\nOption: ");
-        System.out.println("     [1] Username only");
-        System.out.println("     [2] Password only");
-        System.out.println("     [3] Both Username and Password");
+        System.out.println("[1] Username only");
+        System.out.println("[2] Password only");
+        System.out.println("[3] Both Username and Password");
         System.out.println("Enter Choice: ");
         choice = input.nextInt();
-        input.nextLine();
+       
 
         switch (choice) {
             case 1:
