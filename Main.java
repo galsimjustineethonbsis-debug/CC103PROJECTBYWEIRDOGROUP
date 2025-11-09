@@ -30,8 +30,8 @@ public class Main {
     //this is the main method where it will all start
     // as you can see, some variables are in local while some are considered in global
     public static void main(String[] arg) {
-        //these are the varaibles and the data of the user and this can be changed if the user wants to
 
+        //these are the varaibles and the data of the user and this can be changed if the user wants to
         int totalVehicles = 0;
         int carctr = 0, motorctr = 0, truckctr = 0;
         int totalParkingMin = 0;
@@ -46,9 +46,9 @@ public class Main {
             do {
                 //this is where the user will input their acc details to access the system
                 System.out.print("\nEnter Username: ");
-                String loginUser = input.next();
+                String loginUser = input.nextLine();
                 System.out.print("Enter Password: ");
-                String loginPass = input.next();
+                String loginPass = input.nextLine();
 
                 // and this is the condition that is strictly need to be followed for security purposes
                 if (loginUser.equals(user) && loginPass.equals(password)) {
@@ -65,33 +65,60 @@ public class Main {
                         System.exit(0); // the system will terminate
                     }
                 }
+
             } while (!isLogin); // this block of code will repeat itself as long as the user inputs the wrong credentials
 
             //this variable determines and controls the loop if the system is running or not.
             boolean runProg = true;
             while (runProg) {
-                System.out.println(); //below is an ASCII art that we used a generator to make
-                System.out.println(" _    _      _                          _ ");
-                System.out.println("| |  | |    | |                        | |");
-                System.out.println("| |  | | ___| | ___ ___  _ __ ___   ___| |");
-                System.out.println("| |/\\| |/ _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\ |");
-                System.out.println("\\  /\\  /  __/ | (_| (_) | | | | | |  __/_|");
-                System.out.println(" \\/  \\/ \\___|_|\\___\\___/|_| |_| |_|\\___(_)");
-                System.out.println("                                          ");
+                String headerArt
+                        = " _    _      _                          _ \n"
+                        + "| |  | |    | |                        | |\n"
+                        + "| |  | | ___| | ___ ___  _ __ ___   ___| |\n"
+                        + "| |/\\| |/ _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\ |\n"
+                        + "\\  /\\  /  __/ | (_| (_) | | | | | |  __/_|\n"
+                        + " \\/  \\/ \\___|_|\\___\\___/|_| |_| |_|\\___(_)\n";
+
+                System.out.println();
+                System.out.println(headerArt);
                 System.out.println("to the BULSU CICT Parking fee System, " + user + "!");
                 System.out.println(border);
-                System.out.println("      MAIN MENU     ");
+                System.out.println("             MAIN MENU     ");
                 System.out.println(border);
 
                 //below are the printouts of the options of the user.
-                System.out.println("[1] Add vehicle record");
-                System.out.println("[2] View Summary report");
-                System.out.println("[3] Change login info");
-                System.out.println("[4] About us");
-                System.out.println("[5] Exit the program\n" + border);
+                System.out.println("      [1] Add vehicle record");
+                System.out.println("      [2] View Summary report");
+                System.out.println("      [3] Change login info");
+                System.out.println("      [4] About us");
+                System.out.println("      [5] Exit the program\n" + border);
 
-                System.out.print("Please enter your choice");
-                int Choice = input.nextInt(); //this variable will be used in switch case 
+                int Choice = 0;
+                boolean validChoice = false;
+
+                while (!validChoice) {
+                    System.out.print("Please enter your choice (1 - 5): ");
+                    String choiceStr = input.nextLine();
+
+                    if (choiceStr.equals("1")) {
+                        Choice = 1;
+                        validChoice = true;
+                    } else if (choiceStr.equals("2")) {
+                        Choice = 2;
+                        validChoice = true;
+                    } else if (choiceStr.equals("3")) {
+                        Choice = 3;
+                        validChoice = true;
+                    } else if (choiceStr.equals("4")) {
+                        Choice = 4;
+                        validChoice = true;
+                    } else if (choiceStr.equals("5")) {
+                        Choice = 5;
+                        validChoice = true;
+                    } else {
+                        System.out.println("Invalid input! Please enter a number between 1 and 5.");
+                    }
+                }
 
                 //this is where the program continues and will take different paths...
                 //each path differ depending on the user's input earlier of what their choice was.
@@ -130,6 +157,7 @@ public class Main {
                             // ask whether to add another
                             System.out.print("\nTry again? (Y/N): ");
                             String ans = input.next();
+                            input.nextLine();
                             if (ans.equalsIgnoreCase("n")) {
                                 repeatAdd = false;
                             } else if (ans.equalsIgnoreCase("y")) {
@@ -143,13 +171,17 @@ public class Main {
 
                     case 2:
                         GenerateSummary(totalVehicles, carctr, motorctr, truckctr, totalParkingMin, totalFees);
+                        System.out.print("Press enter to continue...");
+                        input.nextLine(); // wait for enter
                         break;
+
                     case 3:
                         // Change login info within main (no extra methods)
                         ChangeLoginInfo();
                         System.out.println("Please log in again with your new credentials.");
                         runProg = false;
                         break;
+
                     case 4:
                         // About (kept simple)
                         System.out.println(border);
@@ -164,12 +196,12 @@ public class Main {
                         System.out.println("Presented to: ");
                         System.out.println("Engr. Evelyn C. Samson\n" + border);
                         System.out.print("Press enter to continue...");
-                        input.nextLine(); // consume newline
                         input.nextLine(); // wait for enter
                         break;
 
                     case 5:
                         runProg = false;
+                        exitProgram = true;
                         break;
 
                     default:
@@ -188,83 +220,96 @@ public class Main {
         System.out.println("     ADD VEHICLE RECORD     ");
         System.out.println(border);
 
-        do {
-            System.out.println("Enter vehicle type (Car, Motorcycle, Truck");
+        // VEHICLE TYPE
+        boolean validType = false;
+        while (!validType) {
+            System.out.print("Enter vehicle type (Car, Motorcycle, Truck, SUV): ");
             vehicleType = input.next();
-            if (vehicleType.equalsIgnoreCase("car") || vehicleType.equalsIgnoreCase("Motorcycle")
-                    || vehicleType.equalsIgnoreCase("motor") || vehicleType.equalsIgnoreCase("truck")
+            if (vehicleType.equalsIgnoreCase("car")
+                    || vehicleType.equalsIgnoreCase("motorcycle")
+                    || vehicleType.equalsIgnoreCase("motor")
+                    || vehicleType.equalsIgnoreCase("truck")
                     || vehicleType.equalsIgnoreCase("suv")) {
-                break;
+                validType = true;
             } else {
-                System.out.println("INVALID INPUT! ONLY (Car, Motorcycle, Truck, SUV) IS ACCEPTED");
-            }
-        } while (!((vehicleType.equalsIgnoreCase("car")) || (vehicleType.equalsIgnoreCase("motorcycle")) || (vehicleType.equalsIgnoreCase("truck") || (vehicleType.equalsIgnoreCase("suv")))));
-
-        System.out.print("\nEnter vehicle Plate Number with NO SPACES (eg. abc-1234): ");
-        plateNum = input.next();
-
-        String lostValid = "no";
-        while (lostValid.equals("no")) {
-            System.out.print("\nLost ticket (Y/N): ");
-            String confirm = input.next();
-            if (confirm.equalsIgnoreCase("y")) {
-                isLostTicket = true;
-                lostValid = "yes";
-            } else if (confirm.equalsIgnoreCase("n")) {
-                isLostTicket = false;
-                lostValid = "yes";
-            } else {
-                System.out.println("Invalid input (Y/N) ONLY");
+                System.out.println("Invalid input! Please enter only Car, Motorcycle, Truck, or SUV.");
             }
         }
 
-        String discValid = "no";
-        while (discValid.equals("no")) {
-            System.out.print("\nPWD or Senior Citizen (Y/N): ");
+        // consume newline before using nextLine()
+        input.nextLine();
+
+        // PLATE NUMBER
+        boolean validPlate = false;
+        while (!validPlate) {
+            System.out.print("Enter vehicle Plate Number (e.g. ABC-1234): ");
+            plateNum = input.nextLine();
+
+            if (plateNum.equals("") || plateNum.equals(" ")) {
+                System.out.println("Invalid plate number. Cannot be empty or only a space.");
+            } else {
+                break; // accept it, even if user typed spaces inside
+            }
+        }
+
+        // DISCOUNT (Y/N)
+        boolean validDisc = false;
+        while (!validDisc) {
+            System.out.print("PWD or Senior Citizen (Y/N): ");
             String confirm = input.next();
             if (confirm.equalsIgnoreCase("y")) {
                 isDiscounted = true;
-                discValid = "yes";
+                validDisc = true;
             } else if (confirm.equalsIgnoreCase("n")) {
                 isDiscounted = false;
-                discValid = "yes";
+                validDisc = true;
             } else {
-                System.out.println("Invalid input (Y/N) ONLY");
+                System.out.println("Invalid input! Please enter only Y or N.");
             }
         }
 
-        boolean validIn = false;
-        while (!validIn) {
-            System.out.print("\nEnter vehicle time IN (0000 - 2359) with NO colons (e.g. 0830): ");
+        // LOST TICKET (Y/N)
+        boolean validLost = false;
+        while (!validLost) {
+            System.out.print("Lost ticket (Y/N): ");
+            String confirm = input.next();
+            if (confirm.equalsIgnoreCase("y")) {
+                isLostTicket = true;
+                validLost = true;
+            } else if (confirm.equalsIgnoreCase("n")) {
+                isLostTicket = false;
+                validLost = true;
+            } else {
+                System.out.println("Invalid input! Please enter only Y or N.");
+            }
+        }
+
+        do {
+
+            System.out.print("\nEnter vehicle time IN (0000(12:00am)-2359(11:59pm) with NO colons \":\"): ");
             timeIn = input.nextInt();
-            int hr = timeIn / 100;
-            int mn = timeIn % 100;
-            if (hr < 0 || hr >= 24 || mn < 0 || mn >= 60) {
-                System.out.println("Invalid input! time IN must be 0000-2359 ONLY");
-            } else {
-                validIn = true;
-            }
-        }
-        boolean validOut = false;
-        while (!validOut) {
-            System.out.print("\nEnter vehicle time OUT (0000 - 2359) with NO colons (e.g. 0930): ");
-            timeOut = input.nextInt();
-            int hr = timeOut / 100;
-            int mn = timeOut % 100;
-            if (hr < 0 || hr >= 24 || mn < 0 || mn >= 60) {
-                System.out.println("Invalid input! time OUT must be 0000-2359 ONLY");
-            } else {
-                int inMinutes = (timeIn / 100) * 60 + (timeIn % 100);
-                int outMinutes = (timeOut / 100) * 60 + (timeOut % 100);
-                if (outMinutes < inMinutes) {
-                    System.out.println("Invalid input! time OUT cannot be less than time IN");
-                } else {
-                    validOut = true;
-                }
-            }
-        }
-    }//end of vehicle info
 
+            if ((timeIn < 0 || timeIn > 2400) || (timeIn / 100 >= 24 || timeIn % 100 >= 60)) {// time/100 = first 2 digits and time%100 = last 2 digits
+                System.out.println("\nInvalid input! time IN must be 0000-2359 ONLY");
+            }
+
+        } while ((timeIn < 0 || timeIn > 2400) || (timeIn / 100 >= 24 || timeIn % 100 >= 60));
+
+        do {
+
+            System.out.print("\nEnter vehicle time OUT (0000(12:00am)-2359(11:59pm) with NO colons \":\"): ");
+            timeOut = input.nextInt();
+
+            if ((timeOut < timeIn || timeOut > 2400) || (timeOut / 100 >= 24 || timeOut % 100 >= 60)) {
+                System.out.println("\nInvalid input! time OUT must be 0000-2359 ONLY and can NOT be LESS THAN  timme IN");
+            }
+
+        } while (timeOut < timeIn || timeOut > 2359 || (timeOut / 100 >= 24 || timeOut % 100 >= 60));
+
+        input.nextLine(); // clear newline before going back to main
+    }
+
+    //end of vehicle info
     public static double ComputeParkingFee() {
         int TimeinHour = timeIn / 100;
         int TimeinMin = timeIn % 100;
@@ -283,10 +328,6 @@ public class Main {
         int FirstHourRate = 0;
         int SucceedingRate = 0;
 
-        if (diffMinutes <= 30) {
-            return 0.0;
-        }
-
         if (vehicleType.equalsIgnoreCase("motorcycle") || vehicleType.equalsIgnoreCase("motor")) {
             FirstHourRate = Motorcycle;
             SucceedingRate = MotorSucceeding;
@@ -302,12 +343,13 @@ public class Main {
         }
 
         double parkingFee = 0.0;
-        if (totalHours <= 1) {
-            parkingFee = FirstHourRate;
-        } else {
-            parkingFee = FirstHourRate + (totalHours - 1) * SucceedingRate;
+        if (diffMinutes > 30) {
+            if (totalHours <= 1) {
+                parkingFee = FirstHourRate;
+            } else {
+                parkingFee = FirstHourRate + (totalHours - 1) * SucceedingRate;
+            }
         }
-
         if (isDiscounted) {
             parkingFee = parkingFee - (parkingFee * DiscountedRate / 100.0);
         }
@@ -374,7 +416,7 @@ public class Main {
         System.out.println("   Motorcycles: " + motorcyclectr);
         System.out.println("   Trucks: " + truckctr);
 
-        System.out.printf("\nTotal Fees Collected: P%.2f\n", totalFees);
+        System.out.println("\nTotal Fees Collected: P" + totalFees);
 
         if (totalVehicles > 0) {
             int avgMinutes = totalParkingMin / totalVehicles;
