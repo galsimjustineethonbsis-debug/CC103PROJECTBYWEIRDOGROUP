@@ -248,6 +248,9 @@ public class Main {
         int succeedingRate = 0;
 
         if (vehicleType.equalsIgnoreCase("car")) {
+        String discValid = "no";
+        while (discValid.equals("no")) {
+            System.out.print("\nPWD or Senior Citizen (Y/N): ");
             firstHourRate = 20;
             succeedingRate = 10;
         } else if (vehicleType.equalsIgnoreCase("motorcycle")) {
