@@ -61,7 +61,7 @@ public class Main {
     static int TruckRate = 60;
     static int TruckRateSucceeding = TruckRate / 2;
 
-    static int LostTicketPenalty = 200; //this is the fixed penalty for lost tickets
+    static double LostTicketPenalty = 200; //this is the fixed penalty for lost tickets
     static int DiscountedRate = 20; //this is the percentage for the discount for PWDs and Senior Citizens
 
     /*this variable serves as the border for the output, put in a variable to 
@@ -71,7 +71,7 @@ public class Main {
 
     //these are the global variables that will be used in different methods
     static String vehicleType;                    //"car", "motorcycle", "truck", "suv"
-    static String plateNum;                       //plate number of the vehicle
+    static String plateNum;                      //plate number of the vehicle
     static int timeIn;                            //time in HHMM format (0000-2359)
     static int timeOut;                           //time out HHMM format (0000-2359), this must be greater than timeIn
     static boolean isDiscounted;                  //true if PWD or Senior Citizen, false otherwise
@@ -92,7 +92,7 @@ public class Main {
 
         //this is the loop of the login system
         while (!exitProgram) {
-            System.out.println("\nWelcome to the BULSU CICT Parking fee System!\nPlease log in.");
+            System.out.println("\nWelcome to the Azure Parking Daioh Parking fee System!\nPlease log in.");
             boolean isLogin = false; //this variable determines if the user has been logged in the system
             int error = 3; // this is the amount of times that the user has before they get locked out of the system for wrong input of credentials
 
@@ -139,7 +139,7 @@ public class Main {
                 //this is the printout of the main menu header        
                 System.out.println();
                 System.out.println(headerArt); //since we put the header art in a variable, we can just call it here
-                System.out.println("to the BULSU CICT Parking fee System, " + user + "!");
+                System.out.println("to the Azure Parking Daioh System, " + user + "!");
                 System.out.println(border); //since we put the border in a variable, we can just call it here
                 System.out.println("             MAIN MENU     ");
                 System.out.println(border); //same as above
@@ -157,29 +157,16 @@ public class Main {
 
                 //this loop will continue until the user inputs a valid choice
                 while (!validChoice) {
-                    System.out.print("Please enter your choice (1 - 5): ");
-                    String choiceStr = input.nextLine();
+                    System.out.print("Enter your choice (1-5): ");
+                    Choice = input.nextInt();
+                    input.nextLine(); //consume newline
 
-                    if (choiceStr.equals("1")) {
-                        Choice = 1;
-                        validChoice = true;
-                    } else if (choiceStr.equals("2")) {
-                        Choice = 2;
-                        validChoice = true;
-                    } else if (choiceStr.equals("3")) {
-                        Choice = 3;
-                        validChoice = true;
-                    } else if (choiceStr.equals("4")) {
-                        Choice = 4;
-                        validChoice = true;
-                    } else if (choiceStr.equals("5")) {
-                        Choice = 5;
-                        validChoice = true;
+                    if (Choice >= 1 && Choice <= 5) {
+                        validChoice = true; //valid input
                     } else {
                         System.out.println("Invalid input! Please enter a number between 1 and 5.");
                     }
                 }
-
                 //this is where the program continues and will take different paths...
                 //each path differ depending on the user's input earlier of what their choice was.
                 switch (Choice) {
@@ -189,6 +176,8 @@ public class Main {
                         // this loop allows the user to add multiple vehicle records without going back to the main menu
                         boolean repeatAdd = true;
                         while (repeatAdd) {
+
+                            //PRINT OUT THE MENU OF THE ADD VEHICLE RECORD
                             // gather vehicle inputs
                             InputVehicleInfo(); //this method is on line 294
 
@@ -255,11 +244,20 @@ public class Main {
                         System.out.println("Group 2 CC 103 Final Project");
                         System.out.println("Parking Fee System\n");
                         System.out.println("Presented By:");
-                        System.out.println("Leader & Lead Developer: Jared Con Medina");
-                        System.out.println("Project Manager & Assistant Developer: Thristan Sillano");
-                        System.out.println("Developer: Justine Ethon Galsim");
-                        System.out.println("Tester & Documentation & Production & Program Concept Designer: Isabella Quiñon, Abiael Capongga");
-                        System.out.println(border);
+
+                        System.out.println("*------------------------------|-----------------------|----------------|---------------------------------------|--------------------*");
+                        System.out.println("|         NAME                 |        COURSE         |YEAR AND SECTION|           CONTACT INFO                |        ROLE        |");
+                        System.out.println("|==============================|=======================|================|=======================================|====================|");
+                        System.out.println("|     MEDINA, JARED CON P.     |                       |                |      medina.jared.bsis@gmail.com      |   Lead Developer  |");
+                        System.out.println("*------------------------------|                       |                |---------------------------------------|--------------------*");
+                        System.out.println("| SILLANO, ISAIAH THRISTAN W.  |                       |                |     sillano.isaiah@bsis@gmail.com     |        ROLE        |");
+                        System.out.println("*------------------------------|  BACHELOR OF SCIENCE  |                |---------------------------------------|--------------------*");
+                        System.out.println("|   GALSIM, JUSTINE ETHON B.   |          IN           |    1B - G2     |     galsimjustineethon@gmail.com      |        ROLE        |");
+                        System.out.println("*------------------------------|  INFORMATION SYSTEMS  |                |---------------------------------------|--------------------*");
+                        System.out.println("|     CAPONGGA, ABIGAEL M.     |                       |                |    capongga.abigael.bsis@gmail.com    |        ROLE        |");
+                        System.out.println("*------------------------------|                       |                |---------------------------------------|--------------------*");
+                        System.out.println("|QUINON, MA. JESUSA ISABELLA H.|                       |                |    quinon.isabella.bsis@gmail.com     |        ROLE        |");
+                        System.out.println("*------------------------------|-----------------------|----------------|---------------------------------------|--------------------*");
                         System.out.println("Presented to: ");
                         System.out.println("Engr. Evelyn C. Samson\n" + border);
                         System.out.print("Press enter to continue...");
@@ -280,7 +278,7 @@ public class Main {
         }// end while !exitProgram
 
         //this is the exit message of the program when the user chooses to exit
-        System.out.println(border + "\nExiting Program... Thank you for using the BULSU CICT Parking fee System!\n" + border);
+        System.out.println(border + "\nExiting Program... Thank you for using the Azure Parking Daioh Parking fee System!\n" + border);
         input.close();
 
     }//main
@@ -294,6 +292,22 @@ public class Main {
     public static void InputVehicleInfo() {
         System.out.println(border);
         System.out.println("     ADD VEHICLE RECORD     ");
+        System.out.println(border);
+
+        System.out.println(border);
+        System.out.println("         VEHICLE RATES MENU");
+        System.out.println(border);
+        System.out.println("Motorcycle   - First Hour: P" + MotorcycleRate
+                + " | Succeeding Hour: P" + MotorRateSucceeding);
+        System.out.println("Car          - First Hour: P" + CarRate
+                + " | Succeeding Hour: P" + CarRateSucceeding);
+        System.out.println("Truck / SUV  - First Hour: P" + TruckRate
+                + " | Succeeding Hour: P" + TruckRateSucceeding);
+        System.out.println(border);
+        System.out.println("Additional Information:");
+        System.out.println(" - 30 minutes grace period (no charge)");
+        System.out.println(" - Lost ticket penalty: P" + LostTicketPenalty);
+        System.out.println(" - 20% discount for PWDs and Senior Citizens");
         System.out.println(border);
 
         //VEHICLE TYPE
@@ -330,11 +344,37 @@ public class Main {
             }
         }
 
+        //TIME IN and TIME OUT
+        //this do-while loop will continue until the user inputs a valid time in
+        //TIME IN and TIME OUT
+//this loop will continue until the user inputs valid time in and time out
+        boolean validTime = false;
+        do {
+            System.out.print("\nEnter vehicle time IN (0000-2359, no colons): ");
+            timeIn = input.nextInt();
+            System.out.print("\nEnter vehicle time OUT (0000-2359, no colons): ");
+            timeOut = input.nextInt();
+
+            //check if times are within 00:00-23:59
+            boolean timeInValid = timeIn >= 0 && timeIn <= 2359 && (timeIn / 100 < 24) && (timeIn % 100 < 60);
+            boolean timeOutValid = timeOut >= 0 && timeOut <= 2359 && (timeOut / 100 < 24) && (timeOut % 100 < 60);
+
+            if (!timeInValid || !timeOutValid) {
+                System.out.println("\nInvalid input! Time IN and OUT must be between 0000-2359.");
+            } else if (timeOut < timeIn) {
+                System.out.println("\nInvalid input! Time OUT must be greater than Time IN.");
+            } else if (timeOut == timeIn) {
+                System.out.println("\nInvalid input! Time IN and Time OUT cannot be the same.");
+            } else {
+                validTime = true; //all checks passed
+            }
+        } while (!validTime);
+
         //DISCOUNT (Y/N)
         //discount applies to PWDs and Senior Citizens and will loop until valid input is given
         boolean validDisc = false;
         while (!validDisc) {
-            System.out.print("PWD or Senior Citizen (Y/N): ");
+            System.out.print("\nPWD or Senior Citizen (Y/N): ");
             String confirm = input.next();
             if (confirm.equalsIgnoreCase("y")) {
                 isDiscounted = true;
@@ -363,27 +403,6 @@ public class Main {
                 System.out.println("Invalid input! Please enter only Y or N.");
             }
         }
-
-        //TIME IN and TIME OUT
-        //this do-while loop will continue until the user inputs a valid time in
-        do {
-            System.out.print("\nEnter vehicle time IN (0000(12:00am)-2359(11:59pm) with NO colons \":\"): ");
-            timeIn = input.nextInt();
-
-            if ((timeIn < 0 || timeIn > 2359) || (timeIn / 100 >= 24 || timeIn % 100 >= 60)) {// time/100 = first 2 digits and time%100 = last 2 digits
-                System.out.println("\nInvalid input! time IN must be 0000-2359 ONLY");
-            }
-        } while ((timeIn < 0 || timeIn > 2359) || (timeIn / 100 >= 24 || timeIn % 100 >= 60));
-
-        //this do-while loop will continue until the user inputs a valid time out
-        do {
-            System.out.print("\nEnter vehicle time OUT (0000(12:00am)-2359(11:59pm) with NO colons \":\"): ");
-            timeOut = input.nextInt();
-
-            if ((timeOut < timeIn || timeOut > 2359) || (timeOut / 100 >= 24 || timeOut % 100 >= 60)) {
-                System.out.println("\nInvalid input! time OUT must be 0000-2359 ONLY and can NOT be LESS THAN  time IN");
-            }
-        } while (timeOut < timeIn || timeOut > 2359 || (timeOut / 100 >= 24 || timeOut % 100 >= 60));
 
         input.nextLine(); // clear newline before going back to main
     } //end InputVehicleInfo
@@ -442,15 +461,6 @@ public class Main {
         }
 
         //apply discount (Penalty is not part of discount)
-        if (isDiscounted) {
-            parkingFee = parkingFee - (parkingFee * DiscountedRate / 100.0);
-        }
-
-        //this will add the lost ticket penalty after the discount is applied
-        if (isLostTicket) {
-            parkingFee = parkingFee + LostTicketPenalty;
-        }
-
         return parkingFee;
     }//end ComputeParkingFee
 
@@ -473,7 +483,7 @@ public class Main {
 
         // this is the printout of the receipt
         System.out.println(border + "\nSUMMARY RECEIPT\n" + border);
-        System.out.println("Vehicle: " + vehicleType);
+        System.out.println("Vehicle:      " + vehicleType);
         System.out.println("Plate Number: " + plateNum);
 
         //format time in and time out with leading zeros if needed  
@@ -494,10 +504,27 @@ public class Main {
             outMnStr = "0" + TimeoutMin;
         }
 
-        System.out.println("Time In: " + inHrStr + ":" + inMnStr);
+        System.out.println("\nTime In:  " + inHrStr + ":" + inMnStr);
         System.out.println("Time Out: " + outHrStr + ":" + outMnStr);
         System.out.println("Total Duration: " + durHours + " hour(s) and " + durMins + " minute(s)");
-        System.out.println("fee: " + fee);
+
+        System.out.println("\nSubtotal: " + fee);
+
+        if (isDiscounted) {
+
+            System.out.println("Discount Applied (" + DiscountedRate + "%): -P" + (fee * (DiscountedRate / 100.0)));
+            fee = fee - (fee * (DiscountedRate / 100.0));
+            System.out.println("Amount after discount:   P" + fee);
+        }
+
+        //this will add the lost ticket penalty after the discount is applied
+        if (isLostTicket) {
+            fee += LostTicketPenalty;
+            System.out.println("Lost Ticket Penalty:    +P" + LostTicketPenalty);
+        }
+        System.out.println("\nTotal Amount Due:        P" + fee);
+        System.out.println(border);
+
     } //end DisplayReceipt
 
     //GenerateSummary - generates daily summary report based on parameters
