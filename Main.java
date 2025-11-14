@@ -89,6 +89,7 @@ public class Main {
         int totalParkingMin = 0;
         double totalFees = 0.0;
         boolean exitProgram = false;
+        int ticketctr = 0; //this variable serves as the ticket number counter for each vehicle record added
 
         //this is the loop of the login system
         while (!exitProgram) {
@@ -106,6 +107,9 @@ public class Main {
                 // and this is the condition that is strictly need to be followed for security purposes
                 if (loginUser.equals(user) && loginPass.equals(password)) {
                     isLogin = true; // if the user inputs the correct credentials, this will become true and they will be able to access the system
+                    System.out.println("\nLogin successful! Accessing the system...");
+                    System.out.println("Logged in as: " + user);
+                    System.out.println(border);
                 } else { //however... if they dont put the correct credentials:
                     error = error - 1; //their attempts will be subtracted by one
                     System.out.println(border);
@@ -201,8 +205,10 @@ public class Main {
                             int outMinutes = (timeOut / 100) * 60 + (timeOut % 100);
                             totalParkingMin = totalParkingMin + (outMinutes - inMinutes);
 
+                            ticketctr += 1; //this increases the ticket number counter by one for each vehicle record added
+
                             //the fee variable is passed here to display the receipt
-                            DisplayReceipt(fee); //this method is on line 460
+                            DisplayReceipt(fee, ticketctr); //this method is on line 460
 
                             //used to update total fees for summary report
                             totalFees = totalFees + fee;
@@ -245,19 +251,19 @@ public class Main {
                         System.out.println("Parking Fee System\n");
                         System.out.println("Presented By:");
 
-                        System.out.println("*------------------------------|-----------------------|----------------|---------------------------------------|--------------------*");
-                        System.out.println("|         NAME                 |        COURSE         |YEAR AND SECTION|           CONTACT INFO                |        ROLE        |");
-                        System.out.println("|==============================|=======================|================|=======================================|====================|");
-                        System.out.println("|     MEDINA, JARED CON P.     |                       |                |      medina.jared.bsis@gmail.com      |   Lead Developer  |");
-                        System.out.println("*------------------------------|                       |                |---------------------------------------|--------------------*");
-                        System.out.println("| SILLANO, ISAIAH THRISTAN W.  |                       |                |     sillano.isaiah@bsis@gmail.com     |        ROLE        |");
-                        System.out.println("*------------------------------|  BACHELOR OF SCIENCE  |                |---------------------------------------|--------------------*");
-                        System.out.println("|   GALSIM, JUSTINE ETHON B.   |          IN           |    1B - G2     |     galsimjustineethon@gmail.com      |        ROLE        |");
-                        System.out.println("*------------------------------|  INFORMATION SYSTEMS  |                |---------------------------------------|--------------------*");
-                        System.out.println("|     CAPONGGA, ABIGAEL M.     |                       |                |    capongga.abigael.bsis@gmail.com    |        ROLE        |");
-                        System.out.println("*------------------------------|                       |                |---------------------------------------|--------------------*");
-                        System.out.println("|QUINON, MA. JESUSA ISABELLA H.|                       |                |    quinon.isabella.bsis@gmail.com     |        ROLE        |");
-                        System.out.println("*------------------------------|-----------------------|----------------|---------------------------------------|--------------------*");
+                        System.out.println("*------------------------------|-----------------------|----------------|---------------------------------------|---------------------*");
+                        System.out.println("|         NAME                 |        COURSE         |YEAR AND SECTION|           CONTACT INFO                |        ROLE         |");
+                        System.out.println("|==============================|=======================|================|=======================================|=====================|");
+                        System.out.println("|     MEDINA, JARED CON P.     |                       |                |      medina.jared.bsis@gmail.com      |    Lead Developer   |");
+                        System.out.println("*------------------------------|                       |                |---------------------------------------|---------------------*");
+                        System.out.println("| SILLANO, ISAIAH THRISTAN W.  |                       |                |     sillano.isaiah@bsis@gmail.com     |   Project Manager   |");
+                        System.out.println("*------------------------------|  BACHELOR OF SCIENCE  |                |---------------------------------------|---------------------*");
+                        System.out.println("|   GALSIM, JUSTINE ETHON B.   |          IN           |    1B - G2     |     galsimjustineethon@gmail.com      | Assistant Developer |");
+                        System.out.println("*------------------------------|  INFORMATION SYSTEMS  |                |---------------------------------------|---------------------*");
+                        System.out.println("|     CAPONGGA, ABIGAEL M.     |                       |                |    capongga.abigael.bsis@gmail.com    | Assistant Developer |");
+                        System.out.println("*------------------------------|                       |                |---------------------------------------|---------------------*");
+                        System.out.println("|QUINON, MA. JESUSA ISABELLA H.|                       |                |    quinon.isabella.bsis@gmail.com     | Assistant Developer |");
+                        System.out.println("*------------------------------|-----------------------|----------------|---------------------------------------|---------------------*");
                         System.out.println("Presented to: ");
                         System.out.println("Engr. Evelyn C. Samson\n" + border);
                         System.out.print("Press enter to continue...");
@@ -467,7 +473,18 @@ public class Main {
     //DisplayReceipt - displays receipt based on global variables and fee parameter
     //Global variables used: vehicleType, plateNum, timeIn, timeOut
     //this uses the fee variable earlier at the main method when ComputeParkingFee() is called
-    public static void DisplayReceipt(double fee) {
+    public static void DisplayReceipt(double fee, int ticketctr) {
+        String zeronum = "000";
+        if (ticketctr < 10) {
+            zeronum = "000";
+        } else if (ticketctr < 100) {
+            zeronum = "00";
+        } else if (ticketctr < 1000) {
+            zeronum = "0";
+        } else {
+            zeronum = "";
+        }
+
         //this block of code converts timeIn and timeOut from HHMM to hours and minutes for display
         int TimeinHour = timeIn / 100;
         int TimeinMin = timeIn % 100;
@@ -485,6 +502,17 @@ public class Main {
         System.out.println(border + "\nSUMMARY RECEIPT\n" + border);
         System.out.println("Vehicle:      " + vehicleType);
         System.out.println("Plate Number: " + plateNum);
+        System.out.println("Ticket number: " + zeronum + ticketctr);
+        if (isDiscounted) {
+            System.out.println("Discount:     PWD/Senior Citizen");
+        } else {
+            System.out.println("Discount:     None");
+        }
+        if (isLostTicket) {
+            System.out.println("Lost Ticket:  Yes");
+        } else {
+            System.out.println("Lost Ticket:  No");
+        }
 
         //format time in and time out with leading zeros if needed  
         String inHrStr = "" + TimeinHour;
@@ -638,3 +666,58 @@ public class Main {
         }//end while
     }//end ChangeLoginInfo
 }//end class Main
+
+/*
+
+===========================================================
+                 PROJECT CONTRIBUTION REPORT
+===========================================================
+
+1. JARED CON MEDINA – Leader & Lead Developer
+   Programming:
+     - Designed initial system structure and main logic.
+     - Implemented user login, menu navigation, and fee computation.
+     - Declared global constants (rates, penalties).
+     - Fixed early bugs in program flow.
+   Leadership:
+     - Assigned tasks and coordinated code integration.
+     - Guided the assistant developers and the formulation of the code, presentation, and flowchart design.
+
+2. THRISTAN SILLANO – Project Manager & Assistant Developer
+   Programming:
+     - Debugged major logical issues (exit logic, summary, averages).
+     - Improved user input validation and error-handling.
+     - Made variables local
+     - Ensured the program followed rubric requirements.
+   Project Management:
+     - Coordinated team workflow and updates.
+   Presentation:
+     - Created and prepared slides and system walkthrough.
+
+3. JUSTINE ETHON GALSIM – Developer
+   Programming:
+     - Assisted in vehicle counting logic and fee updates.
+     - Helped refine certain compute and summary functions.
+     - was the one who developed the GenerateSummary method
+   Documentation:
+     - Contributed to technical descriptions.
+
+4. ISABELLA QUIÑON – Tester, Documentation, Concept Designer
+   Testing:
+     - Identified bugs, tested edge cases, and validated program behavior.
+     - Helped in GenerateSummary with Abigael Caponnga
+
+   Documentation & Concept:
+     - Helped finalize system theme and project background.
+     - collaborated with Isabella Quiñon in the flowchart design
+
+
+5. Abigael Capongga– Tester, Documentation, Concept Designer
+   Testing:
+     - Identified bugs, tested edge cases, and validated program behavior.
+     - Helped in GenerateSummary with Isabella Quiñon 
+   Documentation & Concept:
+     - Helped finalize system theme and project background.
+     - collaborated with Isabella Quiñon in the flowchart design
+===========================================================
+ */
